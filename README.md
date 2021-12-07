@@ -68,7 +68,7 @@ You will need access to a GCP user account with privileges to create Service Acc
 6. Depending on the deployment you're doing, place the required license keys inside the `./assets/licenses/` folder
    1. **Neo4j-GDS-with-Bloom** template - GDS and Bloom license keys _(Required)_
    2. **Neo4j-Causal-Cluster-with-Bloom** template - Bloom license keys _(Required)_
-7. The templates by default are configure with the following verions of the different components, download these version of the components and place it inside the appropriate `./assets/*` folders. If you need a different version of any of the following components, get the required component and place it inside the appropriate `./assets/*` folder and make the corresponding update in the `variables.tf` file to reflect the changes
+7. The templates by default are configured with the following verions of the different components, download these version of the components and place it inside the appropriate `./assets/*` folders. If you need a different version of any of the following components, get the required component and place it inside the appropriate `./assets/*` folder and make the corresponding update in the `variables.tf` file to reflect the changes
 
    Default component versions:
 
