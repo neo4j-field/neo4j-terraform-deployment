@@ -24,8 +24,8 @@ GCP Project Information
 */
 provider "google" {
    # Configuration options
-   project = <Project Name>
-   region = <Project Region>
-   zone = <Project Zone>
+   project = "<Project Name>"
+   region = "<Project Region>"
+   zone = "<Project Zone>"
    credentials = "keys/keys.json"
 }
