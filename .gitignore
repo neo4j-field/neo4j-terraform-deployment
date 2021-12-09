@@ -13,7 +13,8 @@ crash.log
 *.zip
 *.gz
 *.tar
-*.DS_Store
+
+.DS_Store
 
 
 # Ignore any .tfvars files that are generated automatically for each Terraform run. Most
