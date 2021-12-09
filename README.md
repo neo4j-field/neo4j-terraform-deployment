@@ -88,6 +88,26 @@ You will need access to a GCP user account with privileges to create Service Acc
 
 ## **Usage**
 
+### Choose deployment
+
+1. (Optional) - If you want to deploy your instance in a new VPC and a new Subnet, run the [deployment steps](#deployment-steps) for this template `./Neo4j-Networking`
+2. Deploying a Neo4j GDS Standalone instance with Bloom, run the [deployment steps](#deployment-steps) for this template `./Neo4j-GDS-with-Bloom`
+   ![Neo4j GDS Standalone](./images/gds.png)
+
+3. Deploying a Neo4j Causal Cluster with Bloom with a Private IP DNS resolver, run the [deployment steps](#deployment-steps) for this template `./Neo4j-Causal-Cluster-with-Bloom`
+   ![Neo4j Causal Cluster](./images/causal_cluster.png)
+
+4. Deploying a Kafka Message Queue with Neo4j Stream with Bloom , run the [deployment steps](#deployment-steps) for this template `./Neo4j-Kafka-Streams`
+   ![Kafka with Neo4j Streams](./images/kafka.png)
+
+5. Deploying a Neo4j GDS standalone instance, Neo4j Causal Cluster and setting up **Data Sync** between them, run the [deployment steps](#deployment-steps) for the following templates:
+   1. `./Neo4j-GDS-with-Bloom`
+   2. `./Neo4j-Causal-Cluster-with-Bloom`
+   3. `./Neo4j-Kafka-Streams`
+      ![GDS + Causal Cluster](./images/gds_causal_cluster_kafka.png)
+
+### Deployment steps
+
 1. Initialise the Terraform template
 
 ```
@@ -120,4 +140,4 @@ terraform destroy
 
 ---
 
-`P.S.: Current templates are targeted towards deployments in Google Cloud Platform, if you're interested to develop templates for AWS and Azure drop me a message on Slack :)`
+`P.S.: Current templates are targeted towards deployments in Google Cloud Platform, if you're interested to develop templates for AWS and Azure drop me a message on Slack (Neo4j Team) or Email me @ maruthiprithivi@gmail.com 🖖🏾🙂`
