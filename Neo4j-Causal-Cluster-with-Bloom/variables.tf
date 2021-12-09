@@ -8,6 +8,29 @@
 # Coverage: Firewall, GCE, GCS, Neo4j, APOC and Bloom
 ############################################################################################
 
+variable "project" {
+    description = "The project id where the VPC being provioned"
+    type = string
+}
+
+variable "region" {
+  description = "Region where the VM is being provisioned"
+  type = string
+  default = "asia-southeast1"
+}
+
+variable "zone" {
+    description = "Zone where the VM is being provisioned"
+    type = string
+    default = "asia-southeast1-a"
+}
+
+variable "credentials" {
+    description = "GCP Credentials"
+    type = string
+    default = "keys/keys.json"
+}
+
 variable "dbms_mode" {
     description = "DBMS mode of the node being provisioned"
     type = string
@@ -93,12 +116,6 @@ variable "vm_name" {
     default = "neo4j-causal-cluster"
 }
 
-variable "zone" {
-    description = "Zone of the VM being used by this Terraform deployment"
-    type = string
-    default = "asia-southeast1-a"
-}
-
 variable "machine_type" {
     description = "Machine type of the VM being provisioned by this Terraform deployment"
     type = string
@@ -108,13 +125,13 @@ variable "machine_type" {
 variable "vpc_name" {
     description = "Name of the VPC being used by this Terraform deployment"
     type = string
-    default = "vpc-custom-neo4j"
+    default = "vpc-neo4j-custom"
 }
 
 variable "subnetwork_name" {
   description = "Name of the subnetwork used by this Terraform deployment"
   type = string
-  default = "neo4j-subnetwork"
+  default = "subnetwork-neo4j-custom"
 }
 
 variable "subnetwork_range" {
@@ -127,11 +144,6 @@ variable "firewall_priority" {
   description = "Firewall priority of the VM being provisioned by this Terraform deployment"
   type = string
   default = "1000"
-}
-variable "region" {
-  description = "Region of the VM being provisioned by this Terraform deployment"
-  type = string
-  default = "asia-southeast1"
 }
 
 variable "private_ip_google_access" {
@@ -309,7 +321,7 @@ variable "neo4j_database" {
 variable "neo4j_licenses" {
   description = "Neo4j License key names used to upload to GCS in this Terraform deployment"
   type = list(string)
-  default = ["bloom.txt", "gds.txt"]
+  default = ["bloom.txt"]
 }
 
 variable "neo4j_plugins" {

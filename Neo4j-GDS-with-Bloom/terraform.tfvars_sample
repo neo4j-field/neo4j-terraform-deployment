@@ -1,0 +1,36 @@
+#--------------------------------------------------------------
+# Project
+#--------------------------------------------------------------
+
+project = "<Project ID>"
+region = "asia-southeast1"
+zone = "asia-southeast1-a"
+service_account = "<Service-Account>"
+
+
+#--------------------------------------------------------------
+# Resources
+#--------------------------------------------------------------
+
+vpc_name = "vpc-neo4j-custom"
+vpc_subnetwork = "subnetwork-neo4j-custom"
+bucket_name = "neo4j-gds-deployer-01"
+vm_name = "neo4j-gds-standalone-01"
+machine_type = "e2-medium"
+vm_os_image = "ubuntu-os-pro-cloud/ubuntu-pro-1804-lts"
+vm_storage_disk_name = "neo4j-gds-standalone-disk-01"
+labels_group = "neo4j-gds-standalone"
+labels_env = "testing"
+
+
+#--------------------------------------------------------------
+# Neo4j
+#--------------------------------------------------------------
+
+neo4j_version = "4.3.7"
+gds_version = "1.7.2"
+bloom_version = "1.9.0"
+apoc_version = "4.3.0.4"
+neo4j_database = "neo4j-enterprise-4.3.7-unix.tar.gz"
+neo4j_plugins = ["apoc-4.3.0.4-all.jar", "google-cloud-storage-dependencies-3.5-apoc.jar", "neo4j-bloom-1.9.0.zip", "neo4j-graph-data-science-1.7.2-standalone.zip"]
+

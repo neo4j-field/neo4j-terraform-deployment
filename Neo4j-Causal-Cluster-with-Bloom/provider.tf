@@ -23,9 +23,9 @@ terraform {
 GCP Project Information
 */
 provider "google" {
-   # Configuration options
-   project = "annular-moon-311601"
-   region = "asia-southeast1"
-   zone = "asia-southeast1-a"
-   credentials = "keys/keys.json"
+  # Configuration options
+  project = var.project
+  region = var.region
+  zone = var.zone
+  credentials = var.credentials
 }
