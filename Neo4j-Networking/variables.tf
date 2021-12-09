@@ -8,10 +8,39 @@
 # Coverage: Firewall, GCE, GCS, Neo4j, APOC and Bloom
 ############################################################################################
 
+variable "project" {
+    description = "The project id where the VPC being provioned"
+    type = string
+}
+
+variable "region" {
+  description = "Region of the VPC/Subnetwork being created by this Terraform deployment"
+  type = string
+  default = "asia-southeast1"
+}
+
+variable "zone" {
+    description = "Zone where the Network is being provisioned"
+    type = string
+    default = "asia-southeast1-a"
+}
+
+variable "credentials" {
+    description = "The credentials from service account used for provisioning"
+    type = string
+    default = "keys/keys.json"
+}
+
 variable "vpc_name" {
   description = "Name of the VPC being used by this Terraform deployment"
   type = string
-  default = "vpc-custom-neo4j"
+  default = "vpc-neo4j-custom"
+}
+
+variable "subnetwork_name" {
+  description = "Name of the subnetwork being used by this Terraform deployment"
+  type = string
+  default = "subnetwork-neo4j-custom"
 }
 
 /*
@@ -24,22 +53,10 @@ variable "auto_create_subnetworks" {
   default = "false"
 }
 
-variable "subnetwork_name" {
-  description = "Name of the subnetwork being used by this Terraform deployment"
-  type = string
-  default = "neo4j-subnetwork"
-}
-
 variable "subnetwork_range" {
   description = "CIDR range of the subnetwork being used by this Terraform deployment"
   type = string
   default = "10.10.10.0/24"
-}
-
-variable "region" {
-  description = "Region of the VPC/Subnetwork being created by this Terraform deployment"
-  type = string
-  default = "asia-southeast1"
 }
 
 variable "private_ip_google_access" {

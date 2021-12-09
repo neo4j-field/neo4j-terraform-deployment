@@ -1,0 +1,19 @@
+#--------------------------------------------------------------
+# Project
+#--------------------------------------------------------------
+
+project = "<Project ID>"
+region = "<Project Region>"
+zone = "<Project Zone>"
+
+
+#--------------------------------------------------------------
+# Network
+#--------------------------------------------------------------
+
+vpc_name = "vpc-neo4j-custom"
+subnetwork_name = "subnetwork-neo4j-custom"
+
+# auto_create_subnetworks = "false"
+# subnetwork_range = "10.10.10.0/24"
+# private_ip_google_access = "true"

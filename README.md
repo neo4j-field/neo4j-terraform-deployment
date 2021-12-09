@@ -10,7 +10,7 @@ All the templates in this repo follow a similar folder structure.
 ./
 ./main.tf           <-- Terraform file that contains the infrastruture deployment instructions (Infrastruture and Neo4j configs are parameterised and will be passed through the `variable.tf` file)
 ./provider.tf       <-- Terraform file that contains cloud provider and project information
-./variables.tf      <-- Terraform file that contains all the input variables that is required by the `main.tf` file to dploy the infrastruture and Neo4j
+./variables.tf      <-- Terraform file that contains all the input variables that is required by the `main.tf` file to deploy the infrastruture and Neo4j
 ./assets            <-- All packages used in the deployment will be stored in this folder to reduce external dependencies
 ./assets/database   <-- Folder contains Neo4j DB tar file (will exist depending on the deployment template)
 ./assets/licenses   <-- Folder contains License files (will exist depending on the deployment template)
@@ -51,18 +51,15 @@ You will need access to a GCP user account with privileges to create Service Acc
    8. Service Account User
    9. Storage Admin
 4. Download the `keys.json` file and place it inside the `./keys/` folder
-5. Update the `./provider.tf` file with your project details
+5. Create `terraform.tfvars` and fill your project details. See `terraform.tfvars_sample` for example. Check the documentation for required variables. Some of them are having default values. 
 
    Example:
 
    ```
-   provider "google" {
-   # Configuration options
    project = <Project Name>
    region = <Project Region>
    zone = <Project Zone>
-   credentials = "keys/keys.json"
-   }
+   
    ```
 
 6. Depending on the deployment you're doing, place the required license keys inside the `./assets/licenses/` folder
@@ -74,7 +71,7 @@ You will need access to a GCP user account with privileges to create Service Acc
 
    ```
    # Neo4j
-   ./assets/Database/neo4j-enterprise-4.3.7-unix.tar.gz (4.3.7) [ Neo4j-Causal-Cluster-with-Bloom | Neo4j-GDS-with-Bloom ]
+   ./assets/database/neo4j-enterprise-4.3.7-unix.tar.gz (4.3.7) [ Neo4j-Causal-Cluster-with-Bloom | Neo4j-GDS-with-Bloom ]
    ./assets/plugins/apoc-4.3.0.4-all.jar (4.3.0.4) [ Neo4j-Causal-Cluster-with-Bloom | Neo4j-GDS-with-Bloom ]
    ./assets/plugins/google-cloud-storage-dependencies-3.5-apoc.jar (3.5) [ Neo4j-Causal-Cluster-with-Bloom | Neo4j-GDS-with-Bloom ]
    ./assets/plugins/neo4j-bloom-1.9.0.zip (1.9.0) [ Neo4j-Causal-Cluster-with-Bloom | Neo4j-GDS-with-Bloom ]
@@ -138,7 +135,10 @@ terraform destroy
 
 <br>
 
-> _Note:_ Add Terraform to your $PATH to make it easier for you to call upon its powers
+### Notes
+- Add Terraform to your $PATH to make it easier for you to call upon its powers
+- If you're using Windows, ensure all scripts (.sh) created (or checkout from Github) are in Unix format, otherwise it might not executed correctly on created VM.
+- On downloading assets, if the version you need is not listed in neo4j.com/download-center. Copy the download link to the on listed, and replace the version to the one you target
 
 <br>
 

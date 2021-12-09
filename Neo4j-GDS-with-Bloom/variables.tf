@@ -8,6 +8,29 @@
 # Coverage: Firewall, GCE, GCS, Neo4j, GDS, APOC and Bloom
 ############################################################################################
 
+variable "project" {
+    description = "The project id where the VPC being provioned"
+    type = string
+}
+
+variable "region" {
+  description = "Region where the VM is being provisioned"
+  type = string
+  default = "asia-southeast1"
+}
+
+variable "zone" {
+    description = "Zone where the VM is being provisioned"
+    type = string
+    default = "asia-southeast1-a"
+}
+
+variable "credentials" {
+    description = "GCP Credentials"
+    type = string
+    default = "keys/keys.json"
+}
+
 variable "neo4j_version" {
     description = "Neo4j version to be installed"
     type = string
@@ -105,18 +128,6 @@ variable "vm_name" {
     default = "neo4j-gds-standalone-01"
 }
 
-variable "zone" {
-    description = "Zone where the VM is being provisioned"
-    type = string
-    default = "asia-southeast1-a"
-}
-
-variable "region" {
-  description = "Region where the VM is being provisioned"
-  type = string
-  default = "asia-southeast1"
-}
-
 variable "machine_type" {
     description = "Machine type of the VM being provisioned"
     type = string
@@ -126,7 +137,13 @@ variable "machine_type" {
 variable "vpc_name" {
     description = "Name of the VPC being used in provisioning the services of this Terraform deployment"
     type = string
-    default = "vpc-custom-neo4j"
+    default = "vpc-neo4j-custom"
+}
+
+variable "vpc_subnetwork" {
+    description = "Subnetwork of the VPC being used in provisioning the services of this Terraform deployment"
+    type = string
+    default = "subnetwork-neo4j-custom"
 }
 
 variable "vm_os_image" {
@@ -184,12 +201,6 @@ variable "scheduling_automatic_restart" {
     default = "false" 
 }
 
-variable "vpc_subnetwork" {
-    description = "Subnetwork of the VPC being used in provisioning the services of this Terraform deployment"
-    type = string
-    default = "neo4j-subnetwork"
-}
-
 /*
 Hardcoding the internal IP address of the VMs used by this Terraform deployment. 
 You can replace this with a dynamic IP address by making changes to the `main.tf` file.
@@ -218,7 +229,6 @@ variable "static_external_ip_address_type" {
 variable "service_account" {
     description = "Service account used by this Terraform deployment"
     type = string
-    default = "terraform-gcp@annular-moon-311601.iam.gserviceaccount.com"
 }
 
 /*

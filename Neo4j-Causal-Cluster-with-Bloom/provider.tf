@@ -24,8 +24,8 @@ GCP Project Information
 */
 provider "google" {
    # Configuration options
-   project = "<Project Name>"
-   region = "<Project Region>"
-   zone = "<Project Zone>"
+   project = "annular-moon-311601"
+   region = "asia-southeast1"
+   zone = "asia-southeast1-a"
    credentials = "keys/keys.json"
 }
