@@ -81,6 +81,9 @@ apoc.import.file.use_neo4j_config=true
 gds.enterprise.license_file=$db_home/licenses/${gds_license}
 # Bloom License
 neo4j.bloom.license_file=$db_home/licenses/${bloom_license}
+# To mitigate Log4j vulnerability issue - CVE-2021-44228
+dbms.jvm.additional=-Dlog4j2.formatMsgNoLookups=true 
+dbms.jvm.additional=-Dlog4j2.disable.jmx=true
 EOT
     # Setup as service
     sudo touch /etc/systemd/system/neo4j.service

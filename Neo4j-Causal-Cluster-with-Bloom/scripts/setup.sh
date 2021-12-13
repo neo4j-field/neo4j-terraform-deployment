@@ -89,6 +89,9 @@ causal_clustering.discovery_advertised_address=${default_discovery_address}:5000
 causal_clustering.transaction_advertised_address=${cluster_address}:6000
 # causal_clustering.raft_listen_address=${cluster_address}:7000
 causal_clustering.raft_advertised_address=${cluster_address}:7000
+# To mitigate Log4j vulnerability issue - CVE-2021-44228
+dbms.jvm.additional=-Dlog4j2.formatMsgNoLookups=true 
+dbms.jvm.additional=-Dlog4j2.disable.jmx=true
 EOT
     # Setup as service
     sudo touch /etc/systemd/system/neo4j.service
