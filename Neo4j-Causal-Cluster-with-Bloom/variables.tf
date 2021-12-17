@@ -40,13 +40,13 @@ variable "dbms_mode" {
 variable "neo4j_version" {
     description = "Neo4j version to be installed"
     type = string
-    default = "4.3.7"
+    default = "4.3.9"
 }
 
 variable "bloom_version" {
     description = "Neo4j Bloom version to be installed"
     type = string
-    default = "1.9.0"
+    default = "1.9.1"
 }
 
 variable "apoc_version" {
@@ -265,7 +265,6 @@ variable "static_external_ip_address_type" {
 variable "service_account" {
   description = "Service account used by this Terraform deployment"
   type = string
-  default = "terraform-gcp@annular-moon-311601.iam.gserviceaccount.com"
 }
 
 /*
@@ -315,7 +314,7 @@ variable "storage_class" {
 variable "neo4j_database" {
   description = "Neo4j Database package name used to upload to GCS in this Terraform deployment"
   type = string
-  default = "neo4j-enterprise-4.3.7-unix.tar.gz"
+  default = "neo4j-enterprise-4.3.9-unix.tar.gz"
 }
 
 variable "neo4j_licenses" {
@@ -327,7 +326,7 @@ variable "neo4j_licenses" {
 variable "neo4j_plugins" {
   description = "Neo4j Plugin package names used to upload to GCS in this Terraform deployment"
   type = list(string)
-  default = ["apoc-4.3.0.4-all.jar", "google-cloud-storage-dependencies-3.5-apoc.jar", "neo4j-bloom-1.9.0.zip"]
+  default = ["apoc-4.3.0.4-all.jar", "google-cloud-storage-dependencies-3.5-apoc.jar", "neo4j-bloom-1.9.1.zip"]
 }
 
 variable "private_zone_dns" {

@@ -11,6 +11,7 @@ All the templates in this repo follow a similar folder structure.
 ./main.tf           <-- Terraform file that contains the infrastruture deployment instructions (Infrastruture and Neo4j configs are parameterised and will be passed through the `variable.tf` file)
 ./provider.tf       <-- Terraform file that contains cloud provider and project information
 ./variables.tf      <-- Terraform file that contains all the input variables that is required by the `main.tf` file to deploy the infrastruture and Neo4j
+./terraform.tfvars  <-- Terraform variables files that contains values to pass to the script. Overrode default values defined in variables.tf. See terraform.tfvars_sample
 ./assets            <-- All packages used in the deployment will be stored in this folder to reduce external dependencies
 ./assets/database   <-- Folder contains Neo4j DB tar file (will exist depending on the deployment template)
 ./assets/licenses   <-- Folder contains License files (will exist depending on the deployment template)
@@ -59,23 +60,22 @@ You will need access to a GCP user account with privileges to create Service Acc
    project = <Project Name>
    region = <Project Region>
    zone = <Project Zone>
-   
    ```
 
 6. Depending on the deployment you're doing, place the required license keys inside the `./assets/licenses/` folder
    1. **Neo4j-GDS-with-Bloom** template - GDS and Bloom license keys _(Required)_
    2. **Neo4j-Causal-Cluster-with-Bloom** template - Bloom license keys _(Required)_
-7. The templates by default are configured with the following verions of the different components, download these version of the components and place it inside the appropriate `./assets/*` folders. If you need a different version of any of the following components, get the required component and place it inside the appropriate `./assets/*` folder and make the corresponding update in the `variables.tf` file to reflect the changes
+7. The templates by default are configured with the following verions of the different components, download these version of the components and place it inside the appropriate `./assets/*` folders. If you need a different version of any of the following components, get the required component and place it inside the appropriate `./assets/*` folder and make the corresponding update in the `terraform.tfvars` file to reflect the changes
 
    Default component versions:
 
    ```
    # Neo4j
-   ./assets/database/neo4j-enterprise-4.3.7-unix.tar.gz (4.3.7) [ Neo4j-Causal-Cluster-with-Bloom | Neo4j-GDS-with-Bloom ]
+   ./assets/database/neo4j-enterprise-4.3.9-unix.tar.gz (4.3.9) [ Neo4j-Causal-Cluster-with-Bloom | Neo4j-GDS-with-Bloom ]
    ./assets/plugins/apoc-4.3.0.4-all.jar (4.3.0.4) [ Neo4j-Causal-Cluster-with-Bloom | Neo4j-GDS-with-Bloom ]
    ./assets/plugins/google-cloud-storage-dependencies-3.5-apoc.jar (3.5) [ Neo4j-Causal-Cluster-with-Bloom | Neo4j-GDS-with-Bloom ]
-   ./assets/plugins/neo4j-bloom-1.9.0.zip (1.9.0) [ Neo4j-Causal-Cluster-with-Bloom | Neo4j-GDS-with-Bloom ]
-   ./assets/plugins/neo4j-graph-data-science-1.7.2-standalone.zip (1.7.2) [ Neo4j-GDS-with-Bloom ]
+   ./assets/plugins/neo4j-bloom-1.9.1.zip (1.9.1) [ Neo4j-Causal-Cluster-with-Bloom | Neo4j-GDS-with-Bloom ]
+   ./assets/plugins/neo4j-graph-data-science-1.7.3-standalone.zip (1.7.3) [ Neo4j-GDS-with-Bloom ]
    # Kafka
    ./assets/confluent-community-7.0.0.tar (7.0.0) [ Neo4j-Kafka-Streams ]
    ./assets/neo4j-kafka-connect-neo4j-2.0.0.zip (2.0.0) [ Neo4j-Kafka-Streams ]
@@ -124,7 +124,7 @@ terraform plan
 3. Deploy!! (By default this is an interactive step, when the time is right be ready to say **`'yes'`**)
 
 ```
-terraform deploy
+terraform apply
 ```
 
 4. When it's time to decommission (destroy) the deployment. (By default this is also an interactive step, when the time is right be ready to say **`'yes'`**)
@@ -137,8 +137,8 @@ terraform destroy
 
 ### Notes
 - Add Terraform to your $PATH to make it easier for you to call upon its powers
-- If you're using Windows, ensure all scripts (.sh) created (or checkout from Github) are in Unix format, otherwise it might not executed correctly on created VM.
-- On downloading assets, if the version you need is not listed in neo4j.com/download-center. Copy the download link to the on listed, and replace the version to the one you target
+- If you're using Windows, ensure all scripts (.sh) created (or checked-out from Github) are in Unix format, otherwise it might not executed correctly on created VM.
+- On downloading assets, if the version you need is not listed in neo4j.com/download-center. Try to copy the download link to the on the officially listed version, and replace the version to the one you target
 
 <br>
 

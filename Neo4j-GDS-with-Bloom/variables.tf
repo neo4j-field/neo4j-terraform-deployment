@@ -40,13 +40,13 @@ variable "neo4j_version" {
 variable "gds_version" {
     description = "Neo4j GDS version to be installed"
     type = string
-    default = "1.7.2"
+    default = "1.7.3"
 }
 
 variable "bloom_version" {
     description = "Neo4j Bloom version to be installed"
     type = string
-    default = "1.9.0"
+    default = "1.9.1"
 }
 
 variable "apoc_version" {
@@ -284,7 +284,7 @@ variable "neo4j_licenses" {
 variable "neo4j_plugins" {
   description = "Neo4j Plugin package names used to upload to GCS in this Terraform deployment"
   type = list(string)
-  default = ["apoc-4.3.0.4-all.jar", "google-cloud-storage-dependencies-3.5-apoc.jar", "neo4j-bloom-1.9.0.zip", "neo4j-graph-data-science-1.7.2-standalone.zip"]
+  default = ["apoc-4.3.0.4-all.jar", "google-cloud-storage-dependencies-3.5-apoc.jar", "neo4j-bloom-1.9.1.zip", "neo4j-graph-data-science-1.7.3-standalone.zip"]
 }
 
 variable "subnetwork_range" {

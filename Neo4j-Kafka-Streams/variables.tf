@@ -179,7 +179,6 @@ variable "static_external_ip_address_type" {
 variable "service_account" {
   description = "Service account used by this Terraform deployment"
   type = string
-  default = "terraform-gcp@annular-moon-311601.iam.gserviceaccount.com"
 }
 
 /*

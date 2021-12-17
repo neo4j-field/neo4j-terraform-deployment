@@ -27,7 +27,7 @@ if [ ! -f $file ]; then
     sudo mount -o discard,defaults /dev/sdb /mnt/neo4j/
     sudo cp /etc/fstab /etc/fstab.backup
     uuid=$(sudo blkid /dev/sdb | awk -F '"' '{print $2}')
-    sudo echo "UUID=$uuid /mnt/neo4j/ discard,defaults,nofail 0 2" | sudo tee -a /etc/fstab
+    sudo echo "UUID=$uuid /mnt/neo4j ext4 discard,defaults,nofail 0 2" | sudo tee -a /etc/fstab
     # Copy DB files from GCS to VM
     sudo mkdir -p $db_home/installation-staging
     sudo gsutil -m cp -r gs://${bucket_name}/* $db_home/installation-staging
@@ -81,16 +81,15 @@ apoc.import.file.use_neo4j_config=true
 gds.enterprise.license_file=$db_home/licenses/${gds_license}
 # Bloom License
 neo4j.bloom.license_file=$db_home/licenses/${bloom_license}
-# To mitigate Log4j vulnerability issue - CVE-2021-44228
-dbms.jvm.additional=-Dlog4j2.formatMsgNoLookups=true 
-dbms.jvm.additional=-Dlog4j2.disable.jmx=true
+# To mitigate Log4j vulnerability issue - CVE-2021-44228 (for v4.2-v4.3.7) - https://neo4j.com/security/log4j
+# dbms.jvm.additional=-Dlog4j2.formatMsgNoLookups=true
 EOT
     # Setup as service
     sudo touch /etc/systemd/system/neo4j.service
     sudo tee -a /etc/systemd/system/neo4j.service >/dev/null <<EOT
-[Unit] 
+[Unit]
 Description=Neo4j Management Service
-[Service] 
+[Service]
 Type=simple
 User=${db_owner}
 Group=${db_owner}
