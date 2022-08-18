@@ -43,7 +43,7 @@ if [ ! -f $file ]; then
     sudo rm -f bloom-plugin-3*
     sudo rm -f neo4j-bloom-*
     sudo rm -f readme.txt
-    sudo unzip installation-staging/plugins/neo4j-graph-data-science-${gds_version}-standalone.zip
+    sudo unzip installation-staging/plugins/neo4j-graph-data-science-${gds_version}.zip
     sudo mv neo4j-graph-data-science-${gds_version}.jar plugins
     sudo mv installation-staging/plugins/apoc-${apoc_version}-all.jar plugins
     sudo mv installation-staging/plugins/google-cloud-storage-dependencies-${gcs_version}-apoc.jar plugins
