@@ -13,7 +13,7 @@ service_account = "<Service-Account>"
 #--------------------------------------------------------------
 
 vpc_name = "vpc-neo4j-custom"
-vpc_subnetwork = "subnetwork-neo4j-custom"
+subnetwork_name = "subnetwork-neo4j-custom"
 
 
 #--------------------------------------------------------------
