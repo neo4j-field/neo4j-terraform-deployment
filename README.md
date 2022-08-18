@@ -31,7 +31,7 @@ A working Terraform setup in your local machine or host which is going to be use
 
 <br>
 
-### Googgle Cloud Platform (GCP)
+### Google Cloud Platform (GCP)
 
 You will need access to a GCP user account with privileges to create Service Account and assign Roles to support deployment using Terraform.
 
