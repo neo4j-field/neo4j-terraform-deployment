@@ -60,6 +60,8 @@ You will need access to a GCP user account with privileges to create Service Acc
    project = <Project Name>
    region = <Project Region>
    zone = <Project Zone>
+   # Use the email for service_account found in IAM > Service account, e.g. sa@email.com
+   service_account = <Service-Account>
    ```
 
 6. Depending on the deployment you're doing, place the required license keys inside the `./assets/licenses/` folder
