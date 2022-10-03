@@ -16,9 +16,10 @@ if [ ! -f $file ]; then
     sudo useradd -m ${db_owner} -s /bin/bash
     echo "${db_owner}     ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo
     sudo su -l ${db_owner}
-    # Installing OpenJDK 11
+    # Installing OpenJDK 17
     sudo apt-get update
-    sudo apt-get install default-jdk unzip -y
+    ## sudo apt-get install default-jdk unzip -y
+    sudo apt-get install openjdk-17-jre-headless unzip -y
     # Mounting storage volume for Neo4j DB datastore
     # sudo lsblk # Uncomment to check available disks
     sudo mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
@@ -33,62 +34,65 @@ if [ ! -f $file ]; then
     sudo gsutil -m cp -r gs://${bucket_name}/* $db_home/installation-staging
     # Unpack and setup DB files
     cd $db_home/
-    sudo tar -xf installation-staging/database/neo4j-enterprise-${neo4j_version}-unix.tar.gz
-    sudo mv neo4j-enterprise-${neo4j_version}/* .
+    #sudo tar -xf installation-staging/database/neo4j-enterprise-${neo4j_version}-unix.tar.gz
+    #sudo mv neo4j-enterprise-${neo4j_version}/* .
+    sudo tar -xf installation-staging/database/neo4j-enterprise-${neo4j_version}-dev-unix.tar.gz
+    sudo mv neo4j-enterprise-${neo4j_version}-dev/* .
     sudo mv data /mnt/neo4j/
     sudo mv import /mnt/neo4j/
     sudo chown -R ${db_owner}:${db_owner} /mnt/neo4j
-    sudo unzip installation-staging/plugins/neo4j-bloom-${bloom_version}.zip
-    sudo mv bloom-plugin-4* plugins
-    sudo rm -f bloom-plugin-3*
-    sudo rm -f neo4j-bloom-*
-    sudo rm -f readme.txt
-    sudo mv installation-staging/plugins/apoc-${apoc_version}-all.jar plugins
-    sudo mv installation-staging/plugins/google-cloud-storage-dependencies-${gcs_version}-apoc.jar plugins
-    sudo mv installation-staging/licenses/* licenses
+    #sudo unzip installation-staging/plugins/neo4j-bloom-${bloom_version}.zip
+    #sudo mv bloom-plugin-4* plugins
+    #sudo rm -f bloom-plugin-3*
+    #sudo rm -f neo4j-bloom-*
+    #sudo rm -f readme.txt
+    sudo cp products/bloom-plugin-*.jar plugins
+    #sudo cp products/neo4j-graph-data-science-*.jar plugins
+    sudo cp labs/apoc-*.jar plugins
+    #sudo mv installation-staging/plugins/apoc-${apoc_version}-all.jar plugins
+    ##sudo mv installation-staging/plugins/google-cloud-storage-dependencies-${gcs_version}-apoc.jar plugins
+    #sudo mv installation-staging/licenses/* licenses
     sudo chown -R ${db_owner}:${db_owner} $db_home/*
     # Set config properties
 
     # Open DB Listener
     cp conf/neo4j.conf conf/neo4j.conf.bak #backing up config just in-case :)
-    sudo sed -i '/dbms\.directories\.import\=import/d' conf/neo4j.conf
+    sudo sed -i '/server\.directories\.import\=import/d' conf/neo4j.conf
     sudo tee -a conf/neo4j.conf >/dev/null <<EOT
 # Default listen address
-dbms.default_listen_address=0.0.0.0
+server.default_listen_address=0.0.0.0
 # Default advertised address
-dbms.default_advertised_address=${default_advertised_address}
+server.default_advertised_address=${default_advertised_address}
 # File imports
-dbms.security.allow_csv_import_from_file_urls=true
+#server.security.allow_csv_import_from_file_urls=true
 # Directory paths
-dbms.directories.data=/mnt/neo4j/data
-dbms.directories.import=/mnt/neo4j/import
+server.directories.data=/mnt/neo4j/data
+server.directories.import=/mnt/neo4j/import
 # Memory config
-dbms.memory.heap.initial_size=${initial_heap_size}g
-dbms.memory.heap.max_size=${max_heap_size}g
-dbms.memory.pagecache.size=${page_cache_size}g
+server.memory.heap.initial_size=${initial_heap_size}g
+server.memory.heap.max_size=${max_heap_size}g
+server.memory.pagecache.size=${page_cache_size}g
 # DBMS Upgrade
-dbms.allow_upgrade=${allow_upgrade}
+#dbms.allow_upgrade=${allow_upgrade}
 # Extensions Activation
-dbms.security.procedures.unrestricted=apoc.*,bloom.*
-dbms.security.procedures.allowlist=apoc.*,bloom.*
-dbms.unmanaged_extension_classes=com.neo4j.bloom.server=/bloom
-dbms.security.http_auth_allowlist=/,/browser.*,/bloom.*
+#dbms.security.procedures.unrestricted=apoc.*,bloom.*
+#dbms.security.procedures.allowlist=apoc.*,bloom.*
+#dbms.unmanaged_extension_classes=com.neo4j.bloom.server=/bloom
+#dbms.security.http_auth_allowlist=/,/browser.*,/bloom.*
 # APOC
-apoc.import.file.enabled=true
-apoc.export.file.enabled=true
-apoc.import.file.use_neo4j_config=true
+#apoc.import.file.enabled=true
+#apoc.export.file.enabled=true
+#apoc.import.file.use_neo4j_config=true
 # Bloom License
-neo4j.bloom.license_file=$db_home/licenses/${bloom_license}
+#neo4j.bloom.license_file=$db_home/licenses/${bloom_license}
 # Causal Cluster Setup
-dbms.mode=${dbms_mode}
-causal_clustering.initial_discovery_members=${discovery_addresses}
-causal_clustering.discovery_type=LIST
-# causal_clustering.discovery_listen_address=${default_discovery_address}:5000
-causal_clustering.discovery_advertised_address=${default_discovery_address}:5000
-# causal_clustering.transaction_listen_address=${cluster_address}:6000
-causal_clustering.transaction_advertised_address=${cluster_address}:6000
-# causal_clustering.raft_listen_address=${cluster_address}:7000
-causal_clustering.raft_advertised_address=${cluster_address}:7000
+server.cluster.initial_mode_constraint=NONE
+dbms.cluster.num_primaries=3
+dbms.cluster.minimum_initial_members=4
+dbms.cluster.discovery.initial_members=${discovery_addresses}
+server.discovery.advertised_address=${default_discovery_address}:5000
+server.cluster.advertised_address=${cluster_address}:6000
+server.cluster.raft.advertised_address=${cluster_address}:7000
 # To mitigate Log4j vulnerability issue - CVE-2021-44228 (for v4.2-v4.3.7) - https://neo4j.com/security/log4j
 # dbms.jvm.additional=-Dlog4j2.formatMsgNoLookups=true
 EOT
