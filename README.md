@@ -1,4 +1,7 @@
-# Neo4j Deployment using Terraform (GCP)
+# neo4j-terraform-deployment
+
+## Notice
+Neo4j worked with Google to write a new Terraform Module that replaces this repo. That is [here](https://github.com/neo4j-partners/gcp-marketplace-tf). That same Terraform is listed in Google Cloud Marketplace [here](https://console.cloud.google.com/marketplace/product/neo4j-public/neo4j-enterprise-vm).
 
 This repo provides [Terraform](https://www.terraform.io/) templates to support deployment of Neo4j Graph Data Platform in some of the major Cloud Service Providers.
 
